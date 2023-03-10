@@ -193,6 +193,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-research</module>
     </modules>
     <packaging>pom</packaging>
 

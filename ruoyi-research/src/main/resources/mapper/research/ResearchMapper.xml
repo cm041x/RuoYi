@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.research.mapper.ResearchMapper">
+
+    <resultMap type="Research" id="ResearchResult">
+        <result property="researchId"    column="research_id"    />
+        <result property="researchName"    column="research_name"    />
+        <result property="researchPrice"    column="research_price"    />
+        <result property="researchType"    column="research_type"    />
+        <result property="researchDescription"    column="research_description"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="researchCode"    column="research_code"    />
+    </resultMap>
+
+    <sql id="selectResearchVo">
+        select research_id, research_name, research_price, research_type, research_description, begin_time, research_code from research
+    </sql>
+
+    <select id="selectResearchList" parameterType="Research" resultMap="ResearchResult">
+        <include refid="selectResearchVo"/>
+        <where>
+            <if test="researchName != null  and researchName != ''"> and research_name like concat('%', #{researchName}, '%')</if>
+            <if test="researchPrice != null  and researchPrice != ''"> and research_price = #{researchPrice}</if>
+            <if test="researchType != null  and researchType != ''"> and research_type = #{researchType}</if>
+            <if test="researchDescription != null  and researchDescription != ''"> and research_description = #{researchDescription}</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="researchCode != null  and researchCode != ''"> and research_code = #{researchCode}</if>
+        </where>
+    </select>
+
+    <select id="selectResearchByResearchId" parameterType="Long" resultMap="ResearchResult">
+        <include refid="selectResearchVo"/>
+        where research_id = #{researchId}
+    </select>
+
+    <insert id="insertResearch" parameterType="Research">
+        insert into research
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="researchId != null">research_id,</if>
+            <if test="researchName != null and researchName != ''">research_name,</if>
+            <if test="researchPrice != null and researchPrice != ''">research_price,</if>
+            <if test="researchType != null and researchType != ''">research_type,</if>
+            <if test="researchDescription != null and researchDescription != ''">research_description,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="researchCode != null and researchCode != ''">research_code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="researchId != null">#{researchId},</if>
+            <if test="researchName != null and researchName != ''">#{researchName},</if>
+            <if test="researchPrice != null and researchPrice != ''">#{researchPrice},</if>
+            <if test="researchType != null and researchType != ''">#{researchType},</if>
+            <if test="researchDescription != null and researchDescription != ''">#{researchDescription},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="researchCode != null and researchCode != ''">#{researchCode},</if>
+        </trim>
+    </insert>
+
+    <update id="updateResearch" parameterType="Research">
+        update research
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="researchName != null and researchName != ''">research_name = #{researchName},</if>
+            <if test="researchPrice != null and researchPrice != ''">research_price = #{researchPrice},</if>
+            <if test="researchType != null and researchType != ''">research_type = #{researchType},</if>
+            <if test="researchDescription != null and researchDescription != ''">research_description = #{researchDescription},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="researchCode != null and researchCode != ''">research_code = #{researchCode},</if>
+        </trim>
+        where research_id = #{researchId}
+    </update>
+
+    <delete id="deleteResearchByResearchId" parameterType="Long">
+        delete from research where research_id = #{researchId}
+    </delete>
+
+    <delete id="deleteResearchByResearchIds" parameterType="String">
+        delete from research where research_id in
+        <foreach item="researchId" collection="array" open="(" separator="," close=")">
+            #{researchId}
+        </foreach>
+    </delete>
+
+</mapper>

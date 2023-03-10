@@ -66,6 +66,12 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-research</artifactId>
+            <version>4.7.6</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
