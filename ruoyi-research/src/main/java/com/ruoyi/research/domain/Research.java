@@ -8,7 +8,7 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 【请填写功能名称】对象 research
+ * 项目对象 research
  * 
  * @author xionglei
  * @date 2023-03-09
@@ -19,6 +19,9 @@ public class Research extends BaseEntity
 
     /** 项目编号 */
     private Long researchId;
+
+    /*readConverterExp：读取内容转表达式 (如: 0=男,1=女,2=未知)
+    * */
 
     /** $column.columnComment */
     @Excel(name = "项目名称"/*, readConverterExp = "$column.readConverterExp()"*/)
@@ -39,6 +42,10 @@ public class Research extends BaseEntity
     /** $column.columnComment */
     @Excel(name = "开始时间"/*, readConverterExp = "$column.readConverterExp()"*/)
     private Date beginTime;
+
+    /** $column.columnComment */
+    @Excel(name = "截止时间"/*, readConverterExp = "$column.readConverterExp()"*/)
+    private Date endTime;
 
     /** $column.columnComment */
     @Excel(name = "项目编码"/*, readConverterExp = "$column.readConverterExp()"*/)
@@ -98,6 +105,14 @@ public class Research extends BaseEntity
     {
         return beginTime;
     }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
     public void setResearchCode(String researchCode) 
     {
         this.researchCode = researchCode;
@@ -117,6 +132,7 @@ public class Research extends BaseEntity
             .append("researchType", getResearchType())
             .append("researchDescription", getResearchDescription())
             .append("beginTime", getBeginTime())
+            .append("endTime",getEndTime())
             .append("researchCode", getResearchCode())
             .toString();
     }

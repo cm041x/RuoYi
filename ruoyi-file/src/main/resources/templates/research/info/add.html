@@ -1,0 +1,180 @@
+<!--
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增项目文件信息')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-info-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">所属项目编码：</label>
+                <div class="col-sm-8">
+                    <input name="researchCode" class="form-control" type="text" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">所属项目名称：</label>
+                <div class="col-sm-8">
+                    <input name="researchName" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">文件名称：</label>
+                <div class="col-sm-8">
+                    <input name="fileName" class="form-control" type="text">
+                </div>
+            </div>
+&lt;!&ndash;            <div class="form-group">
+                <label class="col-sm-3 control-label">文件路径：</label>
+                <div class="col-sm-8">
+                    <input name="filePath" class="form-control" type="text">
+                </div>
+            </div>&ndash;&gt;
+
+
+            <input id="filePath" name="filePath" class="form-control" type="file">
+
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "research/info"
+        $("#form-info-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-info-add').serialize());
+            }
+        }
+
+
+
+
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                uploadFile();
+            }
+        }
+
+        function uploadFile() {
+            var formData = new FormData();
+            if ($('#filePath')[0].files[0] == null) {
+                $.modal.alertWarning("请先选择文件路径");
+                return false;
+            }
+            formData.append('fileName', $("input[name='fileName']").val());
+            formData.append('file', $('#filePath')[0].files[0]);
+            $.ajax({
+                url: prefix + "/addfile",
+                type: 'post',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function(result) {
+                    $.operate.successCallback(result);
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增项目文件信息')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content" required>
+    <form class="form-horizontal m" id="form-info-add">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">所属项目编码：</label>
+            <div class="col-sm-8">
+                <input name="researchCode" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">所属项目名称：</label>
+            <div class="col-sm-8">
+                <input name="researchName" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">文件名称：</label>
+            <div class="col-sm-8">
+                <input name="fileName" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">上传文件：</label>
+            <div class="col-sm-8">
+<!--                <input name="filePath" class="form-control" type="text">-->
+                <input id="filePath" name="filePath" class="form-control" type="file">
+            </div>
+        </div>
+
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "research/info"
+    $("#form-info-add").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+             // $.operate.save(prefix + "/addfile", $('#form-info-add').serialize());
+             uploadFile();
+        }
+    }
+/*
+    function submitHandler() {
+        if ($.validate.form()) {
+            uploadFile();
+        }
+    }*/
+
+    function uploadFile() {
+        var formData = new FormData();
+        if ($('#filePath')[0].files[0] == null) {
+            $.modal.alertWarning("请先选择文件路径");
+            return false;
+        }
+
+        formData.append('fileName', $("input[name='fileName']").val());
+        formData.append('file', $('#filePath')[0].files[0]);
+        formData.append('researchName', $("input[name='researchName']").val());
+        formData.append('researchCode', $("input[name='researchCode']").val());
+        $.ajax({
+            url: prefix + "/addfile",
+            type: 'post',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function(result) {
+                $.operate.successCallback(result);
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

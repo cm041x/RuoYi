@@ -8,6 +8,13 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-research-edit" th:object="${research}">
             <input name="researchId" th:field="*{researchId}" type="hidden">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">项目编码</label>
+                <div class="col-sm-8">
+                    <input name="researchCode" th:field="*{researchCode}" class="form-control" type="text" required>
+                </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">项目名称</label>
                 <div class="col-sm-8">
@@ -25,7 +32,7 @@
 
                 <label class="col-sm-3 control-label is-required">项目状态</label>
                 <div class="col-sm-9">
-                    <select class="form-control" name="researchType" >
+                    <select class="form-control" name="researchType" width="60" >
                         <option  th:selected="${researchType=='未完成'}" value="未完成">未完成</option>
                         <option th:selected="${research.researchType=='已完成'}" value="已完成">已完成</option>
                     </select>
@@ -52,12 +59,15 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">项目编码</label>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">截止时间</label>
                 <div class="col-sm-8">
-                    <input name="researchCode" th:field="*{researchCode}" class="form-control" type="text" required>
+                    <div class="input-group date">
+                        <input name="endTime" th:value="${#dates.format(research.endTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
                 </div>
-            </div>
+
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -75,6 +85,11 @@
         }
 
         $("input[name='beginTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        $("input[name='endTime']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true

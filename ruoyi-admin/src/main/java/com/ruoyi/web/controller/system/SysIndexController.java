@@ -134,6 +134,9 @@ public class SysIndexController extends BaseController
         return "main";
     }
 
+
+
+
     // content-main class
     public String contentMainClass(Boolean footer, Boolean tagsView)
     {

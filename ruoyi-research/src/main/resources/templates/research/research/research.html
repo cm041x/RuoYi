@@ -11,6 +11,10 @@
                     <div class="select-list">
                         <ul>
                             <li>
+                                <label>项目编号</label>
+                                <input type="text" name="researchCode"/>
+                            </li>
+                            <li>
                                 <label>项目名称</label>
                                 <input type="text" name="researchName"/>
                             </li>
@@ -27,9 +31,10 @@
                                 <input type="text" class="time-input" placeholder="请选择开始时间" name="beginTime"/>
                             </li>
                             <li>
-                                <label>项目编号</label>
-                                <input type="text" name="researchCode"/>
+                                <label>截止时间</label>
+                                <input type="text" class="time-input" placeholder="请选择截止时间" name="endTime"/>
                             </li>
+
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -110,6 +115,9 @@
                 {
                     field: 'beginTime',
                     title: '开始时间'
+                }, {
+                    field: 'endTime',
+                    title: '截止时间'
                 },
 
 
@@ -121,12 +129,23 @@
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.researchId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.researchId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                         actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="uploadFile(\'' + row.researchId + '\')"><i class="fa fa-remove"></i>上传</a>');
+                        //  actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="uploadFile(\'' + row.researchCode  +'\')"><i class="fa fa-remove"></i>上传</a>');
                         return actions.join('');
                     }
                 }]
             };
             $.table.init(options);
         });
+
+
+
+
+        //文件上传
+        function uploadFile(researchId){
+            // console.log("1="+researchCode+"2="+researchName)
+            $.modal.open('文件上传',"/research/research/upload/"+ researchId);
+        }
     </script>
 </body>
 <!-- 导入区域 -->
